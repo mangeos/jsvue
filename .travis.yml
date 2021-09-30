@@ -4,12 +4,12 @@ node_js:
   # Node 10.3+ includes npm@6 which has good "npm ci" command
   - 10.8
   
-install:
-- npm ci
-# keep the npm cache around to speed up installs
+
 cache:
-  directories:
-  - "$HOME/.npm"
+  npm: false
+  
+before_script:
+    - npm install
 
 script:
     - npm test:e2e
