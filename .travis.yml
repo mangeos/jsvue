@@ -3,13 +3,11 @@ language: node_js
 node_js:
   # Node 10.3+ includes npm@6 which has good "npm ci" command
   - 10.8
-  
 
-cache:
-  npm: false
-  
+
 before_script:
     - npm install
+    - rm -rf nod_modules/ package-lock.json
 
 script:
     - npm test:e2e
