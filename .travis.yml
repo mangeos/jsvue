@@ -5,10 +5,8 @@ node_js:
   - 10.8
   
 
+before_script:
+    - npm install
+
 script:
-  # run all Cypress tests and record on the dashboard
-  - npm run test:e2e
-  # after all tests finish running we need
-  # to kill all background jobs (like "npm start &")
-  # this avoids flake in Travis jobs
-  - kill $(jobs -p) || true
+    - npm test
