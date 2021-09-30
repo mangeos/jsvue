@@ -5,6 +5,6 @@ Vue.use( CKEditor );
 
 Vue.config.productionTip = false
 
-new Vue({
+window.Event = new Vue({
   render: h => h(App),
 }).$mount('#app')

@@ -7,8 +7,8 @@
 
           </div>
 
-          <div v-for="doc in docs" :key='doc'>
-              <button v-on:click="uploadOne(doc.html)">
+          <div class="flexis" v-for="doc in docs" :key='doc'>
+              <button  v-on:click="uploadOne(doc.html)">
                   {{doc.title}}
               </button>
               <button v-on:click="updateDoc(doc._id, editorData)" class="">Uppdatera befintlig dokument</button>
@@ -72,8 +72,11 @@ export default {
                })
                .then(response => response.json())
                .then(data => {
-                 console.log('Success:', data);
+                // console.log('Success:', data);
+                this.$emit('clicked', data);
+
                  this.docs = data;
+
                })
                .catch((error) => {
                  console.error('Error:', error);
@@ -106,3 +109,10 @@ export default {
       }
 
 </script>
+
+<style>
+    .flexis {
+        display: flex;
+        gap: 5% 5%;
+    }
+</style>
