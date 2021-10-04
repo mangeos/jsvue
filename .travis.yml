@@ -6,15 +6,8 @@ node_js:
     - "13"
     - "12"
 
-sudo: false
-
-git:
-    submodules: false
-
 before_script:
     - npm install
-    - npm install cypress --save-dev
-    - rm -rf nod_modules/ package-lock.json
 
 script:
     - npm run test:e2e
