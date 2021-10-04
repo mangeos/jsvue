@@ -10,4 +10,4 @@ before_script:
     - npm install
 
 script:
-    - npm run test:e2e
+    - cypress ci
