@@ -13,6 +13,7 @@ git:
 
 before_script:
     - npm install
+    - npm install cypress --save-dev
     - rm -rf nod_modules/ package-lock.json
 
 script:
