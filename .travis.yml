@@ -16,4 +16,4 @@ before_script:
     - rm -rf nod_modules/ package-lock.json
 
 script:
-    - npm test:e2e
+    - npm run test:e2e
