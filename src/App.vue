@@ -21,6 +21,8 @@
 import editor from './components/editor'
 import Menu from './components/menu'
 
+
+
 export default {
   name: 'App',
   components: {
@@ -30,18 +32,21 @@ export default {
 data() {
         return {
             tasks: [],
-            editorDatan:""
+             // editorDatan:""
         }
 },
-// created() {
+//created() {
 // Event.$on('clicked', (data) => this.tasks = data);
 // },
 methods: {
     testing: function(u) {
-        console.log("u"+u);
+        // console.log("u"+u);
         this.tasks=u
-        console.log(this.tasks);
+        // console.log(this.tasks);
     }
+    // ss: function(a) {
+    //     this.editorData = a;
+    // }
 }
 }
 </script>
@@ -109,9 +114,12 @@ body {
 .button {
     background-color: #4CAF50; /* Green */
     color: white;
-    padding: 15px 32px;
-    text-align: left;
-    font-size: 16px;
+    /* padding: 15px 32px; */
+    text-align: center;
+    /* font-size: 16px; */
+    border-radius: 5px;
+    width: 10em;
+
 }
 
 .button:hover {

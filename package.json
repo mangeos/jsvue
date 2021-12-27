@@ -14,7 +14,12 @@
     "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "@innologica/vue-dropdown-menu": "^0.1.4",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "socket.io-client": "^4.4.0",
+    "vue": "^2.6.11",
+    "vue-dropdowns": "^1.1.2",
+    "vue-multiselect": "^2.1.6",
+    "vue-socket.io": "^3.0.10",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
