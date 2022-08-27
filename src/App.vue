@@ -2,18 +2,19 @@
     <div id="app">
         <div class="header">
             <!-- <div class="header-link"> -->
-            <h2>Home</h2>
-            <h2>Documents</h2>
+            <h2 style="padding: 20px;">Home</h2>
+            <h2 style="padding: 20px;">Documents</h2>
             <div class="header-link">
-                <button class="login-button" v-on:click="form()">login</button>
-                <button class="login-button" v-on:click="formCreate()">Skapa login</button>
+                <button style="background-color: #f4f4f4;" class="login-button" v-on:click="form()">login</button>
+                <button style="background-color: #f4f4f4;" class="login-button" v-on:click="formCreate()">Skapa
+                    login</button>
 
             </div>
             <!-- </div> -->
         </div>
         <div class="container">
             <checkbox ref="childComponentCheckbox" :secret='token' v-on:users="users" v-show="checkboxVissible" />
-            <create v-show="createLogin" v-on:form2="form2()" />
+            <create v-show="createLogin" v-on:form2="form2()" v-on:setToken=setToken v-on:getdata="getdata" />
             <Login ref="childComponentLogin" :secret='token' v-show="LoginVissible" v-on:form2="form2()"
                 v-on:getdata="getdata" v-on:formCreate="formCreate()" />
             <editor ref="childComponentRef" :secret='token' v-show="editorVissible" v-on:clicked="getLoggedIn()"
@@ -65,6 +66,7 @@ data() {
 
 methods: {
     setToken: function (tok) {
+        console.log(tok);
       this.token = tok;  
     },
     getToken: function () {
@@ -119,7 +121,7 @@ methods: {
 body {
     margin: 0;
     padding: 0;
-    background-color: rgba(53, 108, 144, 0.7);
+    background-color:white;
 }
 
 #app {
@@ -133,7 +135,7 @@ body {
     align-items: center;
 
 }
-
+/*
 .header {
     display: flex;
     justify-content:space-between;
@@ -142,16 +144,34 @@ body {
     background-color: #F7F7F7;
     width: 100%;
     align-items: center;
-    /* padding: 0.5%; */
+
+}
+*/
+
+.header {
+    width: 100%;
+    position: absolute;
+        top: 0;
+    display: flex;
+        justify-content: space-between;
+   
+   
+    background-color: #f4f4f4;
+    -webkit-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+    
+    -moz-border-radius: 5px;
+   
 }
 
 .header-link {
-    width: 10%;
-    /* padding: 1%; */
+   
+    padding: 20px; 
 
     gap: 10%;
     display: flex;
-    align-items: center;
+    
 
 }
 
@@ -177,7 +197,7 @@ body {
     /* background-color: white; */
     display: flex;
     justify-content: center;
-    width: 60%;
+   /* width: 60%;*/
 }
 
 /* .container > #menu {
@@ -228,16 +248,15 @@ body {
   background-color: #3e8e41;
 }
 
-.login-button {
-    display: inline-block;
-    
+.login-button { 
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     outline: none;
     color: rgb(0, 0, 0);
-    background-color: #F7F7F7;
+    background-color: white;
     border: none;
+    width: 60%;
    
 }
 

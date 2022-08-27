@@ -33,15 +33,17 @@ export default {
        body: JSON.stringify({ username, password }),
      })
      .then(response => response.json())
-     .then(data => {
-       console.log('Success:', data);
+        .then(data => {
+       console.log(data);
        this.$emit('form2');
+          this.$emit('getdata', data.token, this.username);
+          this.$emit("setToken", data.token);
+         // this.$emit('getdata');
        // this.uploadAll();
      })
      .catch((error) => {
        console.error('Error:', error);
      });
-
     }
   }
 };
@@ -63,13 +65,7 @@ export default {
     width: 60%;
     }
 
-    .innerform {
-        border-radius: 20px;
-    background-color: #f2f2f2;
-    /* padding: 5em 20em; */
-    display: flex;
-    height: 50%;
-    }
+
 
     input[type=text], input[type=password], select {
         width: 100%;

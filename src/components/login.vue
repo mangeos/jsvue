@@ -1,17 +1,19 @@
 <template>
-        <div class="form" >
-            <div class="center">
-                <h1>Login</h1>
-            </div>
-            <div class="innerform">
-                <form class="ss" @submit.prevent="login">
-                    <input type="email" v-model="username" placeholder="username" >
-                    <input v-model="password" placeholder="password" type="password">
-                    <input type="submit" value="log in">
-                </form>
-            </div>
-                    <button class="login-button" v-on:click="formCreate()">Skapa Konto</button>
-        </div>
+  <div class="form">
+    <div class="center">
+      <h1>Login</h1>
+    </div>
+    <div class="innerform">
+      <form class="ss" @submit.prevent="login">
+        <input type="email" v-model="username" placeholder="username">
+        <input v-model="password" placeholder="password" type="password">
+        <input type="submit" value="log in">
+      </form>
+    </div>
+    <div class="innerform">
+      <button class="login-button ss" v-on:click="formCreate()">Skapa Konto</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -95,11 +97,12 @@ export default {
     }
 
     .innerform {
-        border-radius: 20px;
-    background-color: #f2f2f2;
+        
+    background-color: white;
     /* padding: 5em 20em; */
+    justify-content: center;
     display: flex;
-    height: 50%;
+    
     }
 
     input[type=email], input[type=password], select {
