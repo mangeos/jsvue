@@ -78,8 +78,9 @@ export default {
          // alert(this.token1)
          if (!(this.token == "not logged in")) {
              this.uploadAll();
+            // alert("uploadAll");
+
          }
-         // alert("mounted");
 
      },
         watch: {
@@ -157,13 +158,13 @@ export default {
                // this.$emit('users');
                // console.log(this.editorData);
                for (var i = 0; i < this.alldata.length; i++) {
-                   if (this.alldata[i].title == 'dokument'+this.counter) {
+                   if (this.alldata[i].title == this.loggedInUser +"-"+'dokument'+this.counter) {
                        this.counter = this.counter + 1;
                    }
                }
 
                const data = {
-                   title:'dokument'+this.counter,
+                   title: this.loggedInUser+"-"+'dokument'+this.counter,
                    html:this.editorData,
                    allowed_users: this.users
                };
@@ -188,6 +189,7 @@ export default {
                });
            },
            getLoggedInUsername: function (data) {
+           // alert(data);
              this.loggedInUser = data;
            },
            uploadAll: async function() {
@@ -198,7 +200,8 @@ export default {
                  method: 'get', // or 'PUT'
                  headers: {
                     'Content-Type': 'application/json',
-                    'x-access-token': this.token
+                    'x-access-token': this.token,
+                    'loggedInUser': this.loggedInUser
                    
                  },
                  body: JSON.stringify(),
@@ -303,6 +306,7 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
     /* .flexis {
         display: flex;
         gap: 5% 5%;

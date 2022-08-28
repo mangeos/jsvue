@@ -2,12 +2,12 @@
     <div id="app">
         <div class="header">
             <!-- <div class="header-link"> -->
-            <h2 style="padding: 20px;">Home</h2>
-            <h2 style="padding: 20px;">Documents</h2>
+            <h2 style="padding: 20px; font-family: 'Cedarville Cursive', cursive;">Home</h2>
+            <h2 style="padding: 20px; font-family: 'Cedarville Cursive', cursive;">Documents</h2>
             <div class="header-link">
-                <button style="background-color: #f4f4f4;" class="login-button" v-on:click="form()">login</button>
+                <button style="background-color: #f4f4f4;" class="login-button" v-on:click="form()">Logga in</button>
                 <button style="background-color: #f4f4f4;" class="login-button" v-on:click="formCreate()">Skapa
-                    login</button>
+                    Konto</button>
 
             </div>
             <!-- </div> -->
@@ -21,7 +21,10 @@
                 id='myeditor' />
         </div>
         <div class="footer">
-            <p>Test</p>
+            <div class="con">
+
+                <p>Test</p>
+            </div>
         </div>
     </div>
 </template>
@@ -76,12 +79,12 @@ methods: {
         this.$refs.childComponentRef.allowedUsers(data);
     },
     getdata: function(data, loggedin) {
-            console.log(data);
+        console.log(loggedin+" : "+"test");
             // alert(data)
             this.token = data;
+            this.$refs.childComponentRef.getLoggedInUsername(loggedin);
             this.$refs.childComponentRef.checktoken(data);
             this.$refs.childComponentCheckbox.getallusers(data);
-            this.$refs.childComponentRef.getLoggedInUsername(loggedin);
     },
     getLoggedIn: function() {
         // console.log("u"+u);
@@ -182,6 +185,18 @@ body {
     width: 100%;
     height: 10%;
     color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+}
+.footer .con {
+    max-width: 1170px;
+    display: flex;
+    min-width: 700px;
+    /*align-items: center;
+    justify-content: center;
+    */
 }
 
 .container {
