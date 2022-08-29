@@ -4,14 +4,19 @@
             <!-- <div class="header-link"> -->
             <h2 style="padding: 20px; font-family: 'Cedarville Cursive', cursive;">Home</h2>
             <h2 style="padding: 20px; font-family: 'Cedarville Cursive', cursive;">Documents</h2>
-            <div class="header-link">
+
+            <div v-if="this.token == 'not logged in'" class="header-link">
                 <button style="background-color: #f4f4f4;" class="login-button" v-on:click="form()">Logga in</button>
                 <button style="background-color: #f4f4f4;" class="login-button" v-on:click="formCreate()">Skapa
                     Konto</button>
 
             </div>
+            <div v-if="this.token != 'not logged in'" class="header-link">
+                <button style="background-color: #f4f4f4;" class="login-button" v-on:click="reload()">Logga ut</button>
+            </div>
             <!-- </div> -->
         </div>
+
         <div class="container">
             <checkbox ref="childComponentCheckbox" :secret='token' v-on:users="users" v-show="checkboxVissible" />
             <create v-show="createLogin" v-on:form2="form2()" v-on:setToken=setToken v-on:getdata="getdata" />
@@ -53,7 +58,8 @@ data() {
             LoginVissible: false,
             createLogin: false,
             editorVissible: true,
-            token:"not logged in"
+            token:"not logged in",
+            //username: this.$refs.childComponentLogin.getLoggedInUsername() || "test"
              // editorDatan:""
         }
 },
@@ -68,6 +74,9 @@ data() {
 // },
 
 methods: {
+    reload: function () {
+        window.location.reload();  
+    },
     setToken: function (tok) {
         console.log(tok);
       this.token = tok;  
@@ -132,9 +141,9 @@ body {
     overflow: hidden;
     position: absolute;
     width: 100%;
-    height: 100%;
+    flex-direction: column;
     display: flex;
-    justify-content: center;
+    
     align-items: center;
 
 }
@@ -149,23 +158,35 @@ body {
     align-items: center;
 
 }
-*/
+@media screen and (max-width: 1600px) {
+    #app {
+        display: flex;
+        flex-direction: column;
+
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+                overflow: hidden;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center
+    }
+}
+        */
 
 .header {
     width: 100%;
-    position: absolute;
-        top: 0;
+
     display: flex;
-        justify-content: space-between;
    
+    justify-content: space-between;
    
     background-color: #f4f4f4;
     -webkit-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
     
-    -moz-border-radius: 5px;
-   
 }
 
 .header-link {
@@ -179,11 +200,10 @@ body {
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
+   
     background-color: #333333;
     width: 100%;
-    height: 10%;
+    height:250px;
     color: white;
     align-items: center;
     justify-content: center;
@@ -201,8 +221,10 @@ body {
 
 .container {
     display: flex;
-    gap: 1%;
-    height: 100%;
+    gap: 60px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    min-height: 600px;
     justify-content: center;
     width: 100%;
 }
@@ -251,18 +273,35 @@ body {
 .button {
     background-color: #4CAF50; /* Green */
     color: white;
-    /* padding: 15px 32px; */
+    padding: 15px 32px;
     text-align: center;
-    /* font-size: 16px; */
-    border-radius: 5px;
+    font-size: 16px;
+    border: 0px;
+    border-radius: 5px;    
+    cursor: pointer;
     width: 10em;
 
 }
 
-.button:hover {
-  background-color: #3e8e41;
+.button-blue {
+    background-color: #008CBA;
+        /* Green */
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 16px;
+        border: 0px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 10em;
 }
 
+.button-blue:hover {
+  background-color: #036a8d;
+}
+.button:hover {
+    background-color: #3e8e41;
+}
 .login-button { 
     cursor: pointer;
     text-align: center;

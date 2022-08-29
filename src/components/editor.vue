@@ -1,16 +1,20 @@
 <template>
-      <div id="app">
-          <div v-show="showNavVissible" class="toolbar">
-              <button class='button' v-on:click="save()" >Spara Nytt Document</button>
-              <!-- <button class='button' v-on:click="uploadAll()" >show all</button> -->
-              <!-- <Menu /> -->
-               <multiselect v-model="value" :options="options" @select="dispatchAction"></multiselect>
+    <div id="app">
+        <div v-show="showNavVissible" class="toolbar">
+            <!-- <button class='button' v-on:click="uploadAll()" >show all</button> -->
+            <!-- <Menu /> -->
+            <multiselect v-model="value" :options="options" @select="dispatchAction"></multiselect>
 
-               <button v-on:click="updateDoc(doc._id, editorData, value)" v-show="vissible" class="button">Uppdatera</button>
-           </div>
+        </div>
 
-          <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
-  </div>
+        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+        <div style="display: flex; gap: 20px; padding-top: 20px;" v-show="showNavVissible">
+            <button class='button' v-on:click="save()">Spara Nytt</button>
+            <button v-on:click="updateDoc(doc._id, editorData, value)" v-show="vissible"
+                class="button-blue">Uppdatera</button>
+                
+        </div>
+    </div>
 </template>
 
 <script>

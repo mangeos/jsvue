@@ -1,11 +1,17 @@
 <template>
-    <div class="test">
+  <div class="test">
+    <div style="height: 685px; width: 200px;">
+
       <label class="typo__label">Acceptera användare</label>
-      <multiselect v-on:change="sendValues()" v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="username" track-by="username" :preselect-first="true">
-        <template slot="selection" slot-scope="{ values, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} vald användare</span></template>
+      <multiselect v-on:change="sendValues()" v-model="value" :options="options" :multiple="true"
+        :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some"
+        label="username" track-by="username" :preselect-first="true">
+        <template slot="selection" slot-scope="{ values, isOpen }"><span class="multiselect__single"
+            v-if="values.length &amp;&amp; !isOpen">{{ values.length }} vald användare</span></template>
       </multiselect>
-      <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
     </div>
+    <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
+  </div>
 </template>
 
 <script>
@@ -76,7 +82,11 @@ watch: {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 384px;
+   /* height: 384px;
+*/
+    }
 
+    .height {
+      height: 665px;
     }
 </style>
