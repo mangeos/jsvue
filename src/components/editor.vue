@@ -8,11 +8,20 @@
         </div>
 
         <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-        <div style="display: flex; gap: 20px; padding-top: 20px;" v-show="showNavVissible">
+        <div style=" display: flex; gap: 20px; padding-top: 20px;" v-show="showNavVissible">
             <button class='button' v-on:click="save()">Spara Nytt</button>
             <button v-on:click="updateDoc(doc._id, editorData, value)" v-show="vissible"
                 class="button-blue">Uppdatera</button>
-                
+            <button class="button" v-on:click="contactUser()">Visa/stäng kontakt lista</button>
+        </div>
+        <div style="padding:20px;background-color: #333333; border-radius: 5px;margin-top: 30px;"
+            v-if="this.part === true " class="">
+            <h2 style="color:white">Kontakter</h2>
+            <hr>
+            <li style="" v-for="(user) in this.allUsers" :key="user">
+                <a :href="'mailto:'+user">{{user}}</a><br>
+
+            </li>
         </div>
     </div>
 </template>
@@ -62,7 +71,9 @@ export default {
                // testar: this.editorData
                token: this.$emit('getToken'),
                users: [],
-               loggedInUser:String
+               loggedInUser:String,
+               allUsers:[],
+               part: false
 
            };
        },
@@ -197,9 +208,6 @@ export default {
              this.loggedInUser = data;
            },
            uploadAll: async function() {
-             //  this.secret = this.$emit('getToken');
-               // await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/db', {
-
                     await fetch('http://localhost:1338/db', {
                  method: 'get', // or 'PUT'
                  headers: {
@@ -212,36 +220,14 @@ export default {
                })
                .then(response => response.json())
                .then(data => {
-                   console.log(data);
-                   this.alldata = data;
+                console.log(data);
+                this.alldata = data;
 
-                  // let modified_data = [];
-
-
-                   //hämta från login loggedInUser med emit
-                   // let loggedIn = this.$emit('clicked');
-                   // console.log(loggedIn);
-                /*
-                   for (let i = 0; i < data.length; i++) {
-                       if(data[i].allowed_user.includes(this.loggedInUser) == true){
-                           // alert(`success: ${this.loggedInUser}`)
-                           console.log(data[i]);
-                           modified_data.push(data[i]);
-                       }
-                   }
-                   */
-                   //data = modified_data;
-
-
-                // console.log('Success:', data);
-                // this.$emit('clicked', data);
-                // console.log(data);
-                 this.docs = data;
-                 this.options = [];
-                 for (var i = 0; i < data.length; i++) {
+                this.docs = data;
+                this.options = [];
+                for (var i = 0; i < data.length; i++) {
                     this.options.push(data[i].title);
-                 }
-
+                }   
                })
                .catch((error) => {
                  console.error('Error:', error);
@@ -301,6 +287,31 @@ export default {
             .catch((error) => {
               console.error('Error:', error);
             });
+           },
+           contactUser: async function(){
+               this.allUsers = [];
+               await fetch('http://localhost:1338/graphql', {
+                   method: 'post',
+                   headers: {
+                       'Content-Type': 'application/json',
+                       'Accept': 'application/json',
+                   },
+                   body: JSON.stringify({ query: "{ documents { username } }" })
+               })
+                   .then(r => r.json())
+                   .then(data => {
+                       console.log(data.data.documents);
+                       data.data.documents.forEach(element => {
+                           // console.log(element.username);
+                           this.allUsers.push(element.username);
+                        });
+                       this.part = !this.part;
+                      
+                   }    
+               )
+               .catch((error) => {
+                   console.error('Error:', error);
+               });
            }
        }
       }

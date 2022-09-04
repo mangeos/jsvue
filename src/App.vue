@@ -26,10 +26,15 @@
                 id='myeditor' />
         </div>
         <div class="footer">
-            <div class="con">
-
-                <p>Test</p>
-            </div>
+            <ul>
+                <li><a href="https://jsramverk.se">Jsramverk</a></li>
+                <li><a href="mailto:mange.ostling@gmail.com">Email</a></li>
+                <li><a href="https://github.com/mangeos">Github</a></li>
+                <li><a href="https://dbwebb.se/kurser/jsramverk-v1">Dbwebb</a></li>
+                <li>
+                    <p>👋</p>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -218,7 +223,43 @@ body {
     justify-content: center;
     */
 }
+/*-------------------------------------------------------------*/
+ul {
+    display: inline-grid;
+    grid-auto-flow: row;
+    grid-gap: 24px;
+    justify-items: center;
+    margin: auto;
+    list-style-type: none;
+}
 
+@media (min-width: 500px) {
+    ul {
+        grid-auto-flow: column;
+        list-style-type: none;
+    }
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    box-shadow: inset 0 -1px 0 hsla(0, 0%, 100%, 0.4);
+}
+
+a:hover {
+    box-shadow: inset 0 -1.2em 0 hsla(0, 0%, 100%, 0.4);
+}
+
+li:last-child {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+li:hover~li p {
+    animation: wave-animation 0.3s infinite;
+}
+
+/*-------------------------------------------------------------*/
 .container {
     display: flex;
     gap: 60px;
