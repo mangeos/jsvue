@@ -97,7 +97,7 @@ methods: {
         window.location.reload();  
     },
     setToken: function (tok) {
-        alert(tok);
+       // alert(tok);
       this.token = tok;  
     },
     getToken: function () {
