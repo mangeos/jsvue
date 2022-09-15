@@ -23,7 +23,10 @@
             <Login ref="childComponentLogin" :secret='token' v-show="LoginVissible" v-on:form2="form2()"
                 v-on:getdata="getdata" v-on:formCreate="formCreate()" />
             <editor ref="childComponentRef" :secret='token' v-show="editorVissible" v-on:clicked="getLoggedIn()"
-                id='myeditor' />
+              v-on:setAllData="setAllData"  id='myeditor' />
+              <mail v-if="this.token != 'not logged in'"  :allData ="allData" :acceptedUser="acceptedUser" :token="token"/>
+              
+                
         </div>
         <div class="footer">
             <ul>
@@ -45,6 +48,7 @@ import editor from './components/editor'
 import create from './components/createLogin'
 import Login from './components/login'
 import checkbox from './components/checkbox'
+import mail from './components/mail'
 
 
 export default {
@@ -53,7 +57,8 @@ export default {
     editor,
     Login,
     create,
-    checkbox
+    checkbox,
+    mail
 },
 
 data() {
@@ -64,6 +69,8 @@ data() {
             createLogin: false,
             editorVissible: true,
             token:"not logged in",
+            allData: [],
+            acceptedUser: []
             //username: this.$refs.childComponentLogin.getLoggedInUsername() || "test"
              // editorDatan:""
         }
@@ -79,11 +86,18 @@ data() {
 // },
 
 methods: {
+    setAllData: function (data) {
+        this.allData = [];
+        for (let index = 0; index < data.length; index++) {
+          this.allData.push(data[`${index}`].title);
+        }
+        this.acceptedUser = data;
+    },
     reload: function () {
         window.location.reload();  
     },
     setToken: function (tok) {
-        console.log(tok);
+        alert(tok);
       this.token = tok;  
     },
     getToken: function () {
@@ -99,6 +113,7 @@ methods: {
             this.$refs.childComponentRef.getLoggedInUsername(loggedin);
             this.$refs.childComponentRef.checktoken(data);
             this.$refs.childComponentCheckbox.getallusers(data);
+            alert(data)
     },
     getLoggedIn: function() {
         // console.log("u"+u);
@@ -272,6 +287,7 @@ li:hover~li p {
 
 .container > #myeditor {
     flex-direction: column;
+        max-width: 700px;
     /* background-color: white; */
     display: flex;
     justify-content: center;

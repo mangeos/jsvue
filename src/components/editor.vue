@@ -7,12 +7,14 @@
 
         </div>
 
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+        <ckeditor contenteditable="true" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
         <div style=" display: flex; gap: 20px; padding-top: 20px;" v-show="showNavVissible">
             <button class='button' v-on:click="save()">Spara Nytt</button>
             <button v-on:click="updateDoc(doc._id, editorData, value)" v-show="vissible"
                 class="button-blue">Uppdatera</button>
             <button class="button" v-on:click="contactUser()">Visa/stäng kontakt lista</button>
+            <button class="button" v-on:click="createPdf()">pdf</button>
+        <!-- Write your comments here   <button v-on:click="highlight('yellow')" >comment</button>-->
         </div>
         <div style="padding:20px;background-color: #333333; border-radius: 5px;margin-top: 30px;"
             v-if="this.part === true " class="">
@@ -26,26 +28,34 @@
     </div>
 </template>
 
+ 
+
 <script>
 
 import Multiselect from 'vue-multiselect'
 
   // register globally
   // Vue.component('multiselect', Multiselect)
-
+import html2canvas from 'html2canvas';
 // import Vue from "vue";
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import Menu from './menu.vue';
-
+//import Comments from '@ckeditor/ckeditor5-comments/src/comments';
 import socketIOClient from "socket.io-client";
 // import VueSocketIO from 'vue-socket.io'
-
-const ENDPOINT = "http://localhost:1338";
-// const ENDPOINT = "https://jsramverk-editor-maoi19.azurewebsites.net/";
+import { jsPDF } from "jspdf";
+//const ENDPOINT = "http://localhost:1338";
+const ENDPOINT = "https://jsramverk-editor-maoi19.azurewebsites.net/";
 
 //
 const socket = socketIOClient(ENDPOINT);
 
+// imoort pdf
+//import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+// const { PDFDocument, StandardFonts, rgb } = PDFLib
+
+// Plugins to include in the build.
+//ClassicEditor.builtinPlugins = [Comments];
 
 export default {
        name: 'editor',
@@ -61,6 +71,8 @@ export default {
                editorData: "",
                editorConfig: {
                    // The configuration of the editor.
+                   
+
                },
                docs: [],
                alldata: [],
@@ -94,9 +106,7 @@ export default {
          if (!(this.token == "not logged in")) {
              this.uploadAll();
             // alert("uploadAll");
-
          }
-
      },
         watch: {
          // this.uploadAll();
@@ -106,6 +116,87 @@ export default {
          }
      },
        methods: {
+        allData:function () {
+          return this.allData  
+        },
+
+
+        comment: function () {
+           var range=window.getSelection().getRangeAt(0)
+           let span= document.createElement("span")
+           span.style.backgroundColor="yellow";
+           span.appendChild(range.extractContents())
+           range.insertNode(span)
+           alert(range)
+
+
+
+       /*  var span = document.createElement("span");
+        span.style.backgroundColor = "yellow";
+
+        if (window.getSelection) {
+            var sel = window.getSelection();
+            console.log(sel.rangeCount);
+            if (sel.rangeCount) {
+                var range = sel.getRangeAt(0).cloneRange();
+                console.log(range);
+                range.surroundContents(span);
+           //     sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+        //html.style.color="red";  
+        */
+        },
+        makeEditableAndHighlight: function(colour) {
+    var sel = window.getSelection();
+    if (sel.rangeCount && sel.getRangeAt) {
+        var range = sel.getRangeAt(0);
+    }
+    document.designMode = "on";
+    if (range) {
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    // Use HiliteColor since some browsers apply BackColor to the whole block
+    if (!document.execCommand("HiliteColor", false, colour)) {
+        document.execCommand("BackColor", false, colour);
+    }
+    document.designMode = "off";
+},
+
+highlight :function (colour) {
+    var range;
+    if (window.getSelection) {
+        // IE9 and non-IE
+        try {
+            if (!document.execCommand("BackColor", false, colour)) {
+                this.makeEditableAndHighlight(colour);
+            }
+        } catch (ex) {
+            this.makeEditableAndHighlight(colour)
+        }
+    } else if (document.selection && document.selection.createRange) {
+        // IE <= 8 case
+        range = document.selection.createRange();
+        range.execCommand("BackColor", false, colour);
+    }
+},
+
+
+
+        
+         createPdf: async function(){
+            var myEditor = document.getElementsByClassName("ck-editor__main")[0]
+            html2canvas(myEditor).then(function(canvas) {
+                let img = canvas.toDataURL("image/jpeg",1);
+                    let pdf = new jsPDF();
+                    pdf.addImage(img,"jpeg",5,5,205,292);
+                    pdf.save("file.pdf");
+  //  document.body.appendChild(canvas);
+});
+      
+        },
            showNav(data){
                this.showNavVissible = data;
            },
@@ -185,8 +276,8 @@ export default {
                };
                    // socket.emit("create", data);
                  this.counter = this.counter+1;
-               // await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/db', {
-                await fetch('http://localhost:1338/db', {
+                await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/db', {
+              //  await fetch('http://localhost:1338/db', {
                  method: 'POST', // or 'PUT'
                  headers: {
                      'Content-Type': 'application/json',
@@ -208,7 +299,8 @@ export default {
              this.loggedInUser = data;
            },
            uploadAll: async function() {
-                    await fetch('http://localhost:1338/db', {
+               await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/db', {
+            //await fetch('http://localhost:1338/db', {
                  method: 'get', // or 'PUT'
                  headers: {
                     'Content-Type': 'application/json',
@@ -221,6 +313,7 @@ export default {
                .then(response => response.json())
                .then(data => {
                 console.log(data);
+                this.$emit("setAllData",data)
                 this.alldata = data;
 
                 this.docs = data;
@@ -270,8 +363,8 @@ export default {
                };
                console.log(this.users);
 
-            // await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/db', {
-            await fetch('http://localhost:1338/db', {
+             await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/db', {
+            //await fetch('http://localhost:1338/db', {
               method: 'PUT', // or 'PUT'
               headers: {
                 'Content-Type': 'application/json',
@@ -290,7 +383,8 @@ export default {
            },
            contactUser: async function(){
                this.allUsers = [];
-               await fetch('http://localhost:1338/graphql', {
+                // await fetch('http://localhost:1338/graphql', {
+                 await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/graphql', {
                    method: 'post',
                    headers: {
                        'Content-Type': 'application/json',
@@ -309,16 +403,13 @@ export default {
                       
                    }    
                )
-               .catch((error) => {
-                   console.error('Error:', error);
-               });
+                   .catch(error => {console.log(error)})
            }
-       }
-      }
+ }
+   }
 
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');

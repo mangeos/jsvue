@@ -47,7 +47,8 @@ watch: {
         // this.$emit('users', this.values);
       },
       getallusers: async function(tokendata) {
-          await fetch('http://localhost:1338/getallusers', {
+        await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/getallusers', {
+      //    await fetch('http://localhost:1338/getallusers', {
            method: 'GET', // or 'PUT'
            headers: {
              'Content-Type': 'application/json',

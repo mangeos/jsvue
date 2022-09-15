@@ -25,7 +25,8 @@ export default {
   methods: {
     async createLogin() {
       const { username, password } = this;
-      await fetch('http://localhost:1338/auth/register', {
+      await fetch('https://jsramverk-editor-maoi19.azurewebsites.net/auth/register', {
+     // await fetch('http://localhost:1338/auth/register', {
        method: 'POST', // or 'PUT'
        headers: {
          'Content-Type': 'application/json',
