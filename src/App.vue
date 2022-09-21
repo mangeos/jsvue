@@ -113,7 +113,7 @@ methods: {
             this.$refs.childComponentRef.getLoggedInUsername(loggedin);
             this.$refs.childComponentRef.checktoken(data);
             this.$refs.childComponentCheckbox.getallusers(data);
-            alert(data)
+           // alert(data)
     },
     getLoggedIn: function() {
         // console.log("u"+u);

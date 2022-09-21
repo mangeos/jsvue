@@ -37,9 +37,9 @@ export default {
   data() {
     return {
       till: "",
-      from: "mange.ostling@protonmail.com",
+      from: "mange_9l@hotmail.com",
       sub: "Skapa konto och redigera dokument",
-      text: "<a href='http//:localhost:8080'>skapa konto länk</a>",
+      text: "<a href='https://www.student.bth.se/~maoi19/editor/'>skapa konto länk</a>",
       op:""
     }
   },
